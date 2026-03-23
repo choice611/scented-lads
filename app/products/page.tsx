@@ -9,6 +9,7 @@ export default function ProductsPage() {
   const [sortBy, setSortBy] = useState("default");
   const [showPayment, setShowPayment] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any>(null);
+  const [showCrypto, setShowCrypto] = useState(false);
 
   const filteredProducts = selectedCategory === "All" 
     ? products 
