@@ -3,33 +3,17 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
-
-const products = [
-  {
-    id: 1,
-    name: "Luxury Scented Candle",
-    price: { min: 12.99, max: 15.99 },
-    moq: 500,
-    description: "Premium soy wax candle with natural fragrance oils. Long burn time 40-50 hours. Perfect for home decoration and gifts.",
-    specs: {
-      material: "Soy Wax",
-      burnTime: "40-50 hours",
-      size: "8cm x 10cm",
-      weight: "200g",
-      scent: "Lavender, Vanilla, Rose",
-    },
-    images: ["/images/candle-1.jpg", "/images/candle-2.jpg", "/images/candle-3.jpg"],
-    alibabaUrl: "https://scentedlads.en.alibaba.com/product/xxx",
-  },
-];
+import { products } from "../../../data/products";
 
 export default function ProductDetailPage() {
   const params = useParams();
+  const slug = params.slug as string;
+  
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(500);
   const [showPayment, setShowPayment] = useState(false);
 
-  const product = products[0];
+  const product = products.find(p => p.slug === slug) || products[0];
 
   const getPrice = () => {
     if (quantity >= 1000) return product.price.min;
@@ -87,7 +71,7 @@ export default function ProductDetailPage() {
             {/* Info */}
             <div>
               <p className="text-[#C9A962] text-sm uppercase tracking-wide mb-2">
-                {product.name}
+                {product.category}
               </p>
               <h1 className="text-3xl font-bold font-['Playfair_Display'] text-[#1A1A1A] mb-4">
                 {product.name}

@@ -2,51 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-
-const products = [
-  {
-    id: 1,
-    name: "Luxury Scented Candle",
-    slug: "luxury-scented-candle",
-    price: { min: 12.99, max: 15.99 },
-    moq: 500,
-    category: "Candles",
-    image: "/images/candle-1.jpg",
-    alibabaUrl: "https://scentedlads.en.alibaba.com/product/xxx",
-  },
-  {
-    id: 2,
-    name: "Reed Diffuser Set",
-    slug: "reed-diffuser-set",
-    price: { min: 8.50, max: 10.50 },
-    moq: 500,
-    category: "Diffusers",
-    image: "/images/diffuser-1.jpg",
-    alibabaUrl: "https://scentedlads.en.alibaba.com/product/xxx",
-  },
-  {
-    id: 3,
-    name: "LED Flameless Candle",
-    slug: "led-flameless-candle",
-    price: { min: 6.99, max: 8.99 },
-    moq: 1000,
-    category: "LED Candles",
-    image: "/images/led-candle-1.jpg",
-    alibabaUrl: "https://scentedlads.en.alibaba.com/product/xxx",
-  },
-  {
-    id: 4,
-    name: "Soy Wax Beads",
-    slug: "soy-wax-beads",
-    price: { min: 4.50, max: 5.50 },
-    moq: 200,
-    category: "Raw Materials",
-    image: "/images/wax-beads.jpg",
-    alibabaUrl: "https://scentedlads.en.alibaba.com/product/xxx",
-  },
-];
-
-const categories = ["All", "Candles", "Diffusers", "LED Candles", "Raw Materials"];
+import { products } from "../../data/products";
 
 export default function ProductsPage() {
   const [selectedCategory, setSelectedCategory] = useState("All");
@@ -108,7 +64,7 @@ export default function ProductsPage() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             {/* Category Filter */}
             <div className="flex flex-wrap gap-2">
-              {categories.map((cat) => (
+              {["All", "Candles", "Diffusers", "LED Candles", "Raw Materials"].map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
@@ -175,70 +131,18 @@ export default function ProductsPage() {
                   </p>
 
                   {/* Actions */}
-                  <button
-                    onClick={() => handleBuyNow(product)}
-                    className="w-full bg-[#1A1A1A] text-white py-3 rounded-lg font-medium hover:bg-[#333333] transition"
+                  <Link
+                    href={`/products/${product.slug}`}
+                    className="w-full bg-[#1A1A1A] text-white py-3 rounded-lg font-medium hover:bg-[#333333] transition block text-center"
                   >
-                    BUY NOW
-                  </button>
+                    VIEW DETAILS
+                  </Link>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
-
-      {/* Payment Modal */}
-      {showPayment && selectedProduct && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-md w-full p-6 relative">
-            <button
-              onClick={() => setShowPayment(false)}
-              className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 text-2xl"
-            >
-              ×
-            </button>
-
-            <h2 className="text-2xl font-bold text-[#1A1A1A] mb-6 text-center">
-              Choose Payment Method
-            </h2>
-
-            {/* Alibaba Option */}
-            <div className="mb-4">
-              <button
-                onClick={() => window.open(selectedProduct.alibabaUrl, "_blank")}
-                className="w-full p-4 border-2 border-orange-500 rounded-lg hover:bg-orange-50 transition text-left"
-              >
-                <div className="font-bold text-lg mb-1">🏪 Alibaba Secure Trade</div>
-                <div className="text-sm text-gray-600">
-                  ✓ Buyer Protection<br/>
-                  ✓ Credit Card / PayPal accepted<br/>
-                  ✓ Fast Shipping
-                </div>
-              </button>
-            </div>
-
-            {/* Crypto Option */}
-            <div className="mb-4">
-              <button
-                onClick={() => {/* Show crypto details */}}
-                className="w-full p-4 border-2 border-green-500 rounded-lg hover:bg-green-50 transition text-left"
-              >
-                <div className="font-bold text-lg mb-1">₿ Crypto Payment (5% OFF)</div>
-                <div className="text-sm text-gray-600">
-                  ✓ Instant Confirmation<br/>
-                  ✓ Lower Price (5% OFF)<br/>
-                  ✓ ETH / USDT Accepted
-                </div>
-              </button>
-            </div>
-
-            <p className="text-xs text-gray-500 text-center mt-4">
-              🔒 Secure Payment Guaranteed
-            </p>
-          </div>
-        </div>
-      )}
 
       {/* Footer */}
       <footer className="bg-[#1A1A1A] text-white py-12 mt-12">
